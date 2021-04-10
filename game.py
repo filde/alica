@@ -115,6 +115,24 @@ def handle_dialog(res, req):
                 res['response']['text'] = 'Ну и ладно!'
                 res['response']['end_session'] = True
                 del res['response']['buttons']
+            elif 'Покажи город на карте' == req['request']['original_utterance'] and 'city' in sessionStorage[user_id]:
+                res['response']['text'] = 'Играем?'
+                m = [
+                    {
+                        'title': 'Да',
+                        'hide': True
+                    },
+                    {
+                        'title': 'Нет',
+                        'hide': True
+                    },
+                    {
+                        'title': 'Покажи город на карте',
+                        'hide': True,
+                        'url': f'https://yandex.ru/maps/?mode=search&text={city}'
+                    }
+                ]
+                res['response']['buttons'] += m
             else:
                 res['response']['text'] = 'Не поняла ответа! Так да или нет?'
                 m = [
@@ -167,6 +185,11 @@ def play_game(res, req):
                 {
                     'title': 'Нет',
                     'hide': True
+                },
+                {
+                    'title': 'Покажи город на карте',
+                    'hide': True,
+                    'url': f'https://yandex.ru/maps/?mode=search&text={city}'
                 }
             ]
             res['response']['buttons'] += m
@@ -189,6 +212,11 @@ def play_game(res, req):
                     {
                         'title': 'Нет',
                         'hide': True
+                    },
+                    {
+                        'title': 'Покажи город на карте',
+                        'hide': True,
+                        'url': f'https://yandex.ru/maps/?mode=search&text={city}'
                     }
                 ]
                 res['response']['buttons'] += m
